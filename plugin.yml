@@ -1,1 +1,10 @@
 
+name: XPBottles
+main: Trxgically\XPBottles\Main
+api: 3.0.0
+version: 0.1
+author: Trxgically
+commands:
+ airdrops:
+  description: "XPBottles default command"
+  permission: xpbottles.perms
