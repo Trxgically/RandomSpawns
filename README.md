@@ -1,8 +1,8 @@
 # RandomSpawns
 ![alt text](https://raw.githubusercontent.com/Trxgically/RandomSpawns/master/logo.png)
 
-# Why use SpawnsCore?
-SpawnsCore, set a spawn in a variety of commands! Simple. SpawnsCore has a highly customizable configuration file with more to come. SpawnsCore has the ability to set multiple spawnpoints, simple and fast!
+# Why use RandomSpawns?
+Want a new way for your players to spawn in? Vanilla, survival, anarchy. etc! This plugin has many purposes simply set a radius for your players to spawn in and the plugin will randomly teleport the player within the coordinates you set.
 
 # Commands :
 * Set a radius
