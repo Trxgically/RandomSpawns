@@ -13,5 +13,5 @@ Want a new way for your players to spawn in? Vanilla, survival, anarchy, etc! Th
   * - [ ] Add an option to change join message.
   * - [ ] Add an option to disable teleportation message.
   
-  > Feel free to leave me plugin suggestions at [Discord](Soon!)
+  > Feel free to leave me plugin suggestions at [Discord](https://discord.gg/bkcByHZ)
   
