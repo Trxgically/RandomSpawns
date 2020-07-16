@@ -1,10 +1,10 @@
 
-name: XpBottles
-main: Trxgically\XpBottles\Main
+name: RandomSpawns
+main: Trxgically\RandomSpawns\Main
 api: 3.0.0
 version: 0.1
 author: Trxgically
 commands:
- xpbottles:
-  description: "XpBottles default command"
-  permission: xpbottles.perms
+ randomspawns:
+  description: "RandomSpawns default command"
+  permission: randomspawns.perms
