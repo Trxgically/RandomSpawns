@@ -1,6 +1,6 @@
 <?php
 
-namespace Trxgically\XpBottles;
+namespace Trxgically\RandomSpawns;
 use pocketmine\{Server, Player};
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
@@ -10,8 +10,10 @@ use pocketmine\item\Item;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
+use pocketmine\math\Vector3;
 use pocketmine\utils\Config;
 use pocketmine\item\ItemFactory;
+use pocketmine\event\player\PlayerRespawnEvent;
 
 
 class Main extends PluginBase implements Listener
@@ -22,7 +24,7 @@ class Main extends PluginBase implements Listener
     public function onEnable(): void
     {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
-        $this->getLogger()->info(TF::GREEN . "XpBottles enabled!");
+        $this->getLogger()->info(TF::GREEN . "RandomSpawns enabled!");
         $this->saveDefaultConfig();
         $this->config = new Config($this->getDataFolder() . "config.yml", Config::YAML);
         $this->config->getAll();
@@ -31,15 +33,36 @@ class Main extends PluginBase implements Listener
     public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args): bool
     {
 
-        if ($cmd->getName() === "xpbottles") {
+        if ($cmd->getName() === "randomspawns") {
             if (count($args) === 0) {
-                $sender->sendMessage(TF::DARK_RED . TF::BOLD . "Airdrop Commands :" . TF::RESET . "\n" . "\n" . TF::RED . "/airdrops start" . TF::GRAY . " - Start an Airdrop event" . "\n" . TF::RED . "/airdrops stop" . TF::GRAY . " - Stop an Airdrop event" . "\n" . TF::RED . "/airdrops setspawn" . TF::GRAY . " - Set the player spawnpoint for joining an event" . "\n" . TF::RED . "/airdrops setchest" . TF::GRAY . " - Set an Airdrop chest!" . "\n" . TF::RED . "/airdrops setjoinmessage" . TF::GRAY . " - Set the Airdrop player join message");
+                $sender->sendMessage(TF::DARK_RED . TF::BOLD . "RandomSpawns Commands :" . TF::RESET . "\n" . "\n" . TF::RED . "/randomspawns setradius" . TF::GRAY . " - Set the radius for player spawns!");
             } elseif (count($args) === 1) {
                 switch ($args[0]) {
 
-                    case "1":
-                        $sender->sendMessage("1")
-                        break;
+                    case "setradius":
+                    $sender->sendMessage("Format: x,x z,z worldname");
+                    break;
+
+                }
+            }elseif (count($args) === 4){
+                switch ($args[0]) {
+
+                    case "setradius":
+                    if(isset($args[1]) && isset($args[2]) && isset($args[3])) {
+                    $xt = $args[1];
+                    $zt = $args[2];
+                    $world = $args[3];
+
+                    $this->config->setNested("radius.x", $xt);
+                    $this->config->setNested("radius.z", $zt);
+                    $this->config->setNested("world", $world);
+
+                    $this->config->setNested("set.world", true);
+                    $this->config->setNested("set.radius", true);
+                    $this->config->save();
+                    $sender->sendMessage("Radius set!");
+                    }
+                    break;
 
                 }
             }
@@ -49,5 +72,25 @@ class Main extends PluginBase implements Listener
         return true;
 
     }
+
+    public function onPlayerRespawn(PlayerRespawnEvent $e) {
+        $w = $this->config->getNested("world");
+        $world = $this->getServer()->getLevelByName($w);
+        $name = $e->getPlayer();
+
+        $x = $this->config->getNested("radius.x");
+        $x1 = explode(",", $x);
+        $z = $this->config->getNested("radius.z");
+        $z1 = explode(",", $z);
+
+        $xfinal = mt_rand($x1[0], $x1[1]);
+        $zfinal = mt_rand($z1[0], $z1[1]);
+        $y = $world->getHighestBlockAt($xfinal, $zfinal);
+        $yfinal = $y + 1;
+
+        $name->teleport(new Position($xfinal, $yfinal, $zfinal, $world));
+        $name->sendMessage("Player teleported!");
+    }
+
 
 }
