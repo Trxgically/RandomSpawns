@@ -7,7 +7,7 @@ SpawnsCore, set a spawn in a variety of commands! Simple. SpawnsCore has a highl
 # Commands :
 * Set a radius
   
-  *Example
+  * Example
   * /randomspawns setradius 0,100 1000,5000
   
 * To-Do list:
