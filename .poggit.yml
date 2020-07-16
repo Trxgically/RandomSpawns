@@ -5,4 +5,5 @@ branches:
 projects:
   RandomSpawns:
     path: ""
+    icon: "logo.png"
 ...
