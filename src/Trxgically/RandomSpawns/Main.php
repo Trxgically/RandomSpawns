@@ -6,13 +6,10 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
 use pocketmine\event\Listener;
 use pocketmine\command\{Command, CommandSender, ConsoleCommandSender};
-use pocketmine\item\Item;
-use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\utils\Config;
-use pocketmine\item\ItemFactory;
 use pocketmine\event\player\PlayerRespawnEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 
@@ -25,7 +22,6 @@ class Main extends PluginBase implements Listener
     public function onEnable(): void
     {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
-        $this->getLogger()->info(TF::GREEN . "RandomSpawns enabled!");
         $this->saveDefaultConfig();
         $this->getConfig = new Config($this->getDataFolder() . "config.yml", Config::YAML);
         $this->getConfig->getAll();
