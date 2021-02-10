@@ -32,40 +32,30 @@ class Main extends PluginBase implements Listener
 
         if ($cmd->getName() === "randomspawns") {
             if ($sender->hasPermission("randomspawns.perms")){
-            if (count($args) === 0) {
-                $sender->sendMessage(TF::DARK_RED . TF::BOLD . "RandomSpawns Commands :" . TF::RESET . "\n" . "\n" . TF::RED . "/randomspawns setradius" . TF::GRAY . " - Set the radius for player spawns!");
-            } elseif (count($args) === 1) {
-                switch ($args[0]) {
+                if (count($args) === 0) {
+                    $sender->sendMessage(TF::DARK_RED . TF::BOLD . "RandomSpawns Commands :" . TF::RESET . "\n" . "\n" . TF::RED . "/randomspawns setradius" . TF::GRAY . " - Set the radius for player spawns!");
+                } else {
+                    switch ($args[0]) {
+                        case "setradius":
+                            if (count($args) === 4) {
+                                $xt = $args[1];
+                                $zt = $args[2];
+                                $world = $args[3];
 
-                    case "setradius":
-                    $sender->sendMessage("Format: x,x z,z worldname");
-                    break;
+                                $this->config->setNested("radius.x", $xt);
+                                $this->config->setNested("radius.z", $zt);
+                                $this->config->setNested("world", $world);
 
-                }
-            }elseif (count($args) === 4){
-                switch ($args[0]) {
-
-                    case "setradius":
-                    if(isset($args[1]) && isset($args[2]) && isset($args[3])) {
-                    $xt = $args[1];
-                    $zt = $args[2];
-                    $world = $args[3];
-
-                    $this->config->setNested("radius.x", $xt);
-                    $this->config->setNested("radius.z", $zt);
-                    $this->config->setNested("world", $world);
-
-                    $this->config->setNested("set.world", true);
-                    $this->config->setNested("set.radius", true);
-                    $this->config->save();
-                    $sender->sendMessage("Radius set!");
+                                $this->config->setNested("set.world", true);
+                                $this->config->setNested("set.radius", true);
+                                $this->config->save();
+                                $sender->sendMessage("Radius set!");
+                            } else {
+                                $sender->sendMessage("Format: x,x z,z worldname");
+                            }
                     }
-                    break;
-
                 }
             }
-        }
-       
         }
 
         return true;
